@@ -17,6 +17,7 @@ func Routers() *gin.Engine {
 
 	router.UserRouter(ApiGroup)
 	router.InitBaseRouter(ApiGroup)
+	router.BannerRouter(ApiGroup)
 	// 设置跨域中间件
 	return Router
 }
