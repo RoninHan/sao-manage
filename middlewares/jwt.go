@@ -12,7 +12,7 @@ import (
 )
 
 type CustomClaims struct {
-	ID          uint   //
+	ID          string   //
 	NickName    string //
 	AuthorityId uint   //
 	jwt.StandardClaims
@@ -24,7 +24,7 @@ func JWTAuth() gin.HandlerFunc {
 		token := c.Request.Header.Get("x-token")
 		color.Yellow(token)
 		if token == "" {
-			Response.Err(c, http.StatusUnauthorized, 401, "请登录", "")
+			Response.Err(c, http.StatusUnauthorized,  "请登录","")
 			c.Abort()
 			return
 		}
@@ -34,12 +34,12 @@ func JWTAuth() gin.HandlerFunc {
 		if err != nil {
 			if err == TokenExpired {
 				if err == TokenExpired {
-					Response.Err(c, http.StatusUnauthorized, 401, "授权已过期", "")
+					Response.Err(c, http.StatusUnauthorized,  "授权已过期", "")
 					c.Abort()
 					return
 				}
 			}
-			Response.Err(c, http.StatusUnauthorized, 401, "未登陆", "")
+			Response.Err(c, http.StatusUnauthorized,  "未登陆", "")
 			c.Abort()
 			return
 		}

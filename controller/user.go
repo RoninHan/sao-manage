@@ -31,7 +31,7 @@ func PasswordLogin(c *gin.Context) {
 		Response.Err(c,401,"This User is NOT FOUND","")
 		return
 	}
-	token :=utils.CreateToken(c, int(user.ID),user.NickName,user.Role)
+	token :=utils.CreateToken(c, user.UserGuid,user.UserName,user.Role)
 	userinfoMap :=HandleUserModelToMap(user)
 	userinfoMap["token"] = token
 	Response.Success(c,  "success", userinfoMap)
@@ -42,11 +42,12 @@ func GetUserList(c *gin.Context) {
 	// 获取参数
 	UserListForm := forms.UserListForm{}
 	if err := c.ShouldBind(&UserListForm); err != nil {
+		color.Cyan(string(UserListForm.PageSize))
 		utils.HandleValidatorError(c, err)
 		return
 	}
 	// 获取数据
-	total, userlist := dao.GetUserListDao(UserListForm.Page, UserListForm.PageSize)
+	total, userlist := dao.GetUserListDao(UserListForm.Current, UserListForm.PageSize)
 	// 判断
 	if (total + len(userlist)) == 0 {
 		Response.Err(c, 401, "未获取到到数据", map[string]interface{}{
@@ -55,10 +56,7 @@ func GetUserList(c *gin.Context) {
 		})
 		return
 	}
-	Response.Success(c,  "获取用户列表成功", map[string]interface{}{
-		"total":    total,
-		"userlist": userlist,
-	})
+	Response.SuccessGrid(c,  "获取用户列表成功", userlist,total)
 }
 
 func HandleUserModelToMap(user *models.User) map[string]interface{} {
@@ -107,11 +105,14 @@ func PutHeaderImage(c *gin.Context) {
 }
 
 func InsertUser(c *gin.Context){
-	UserForm := forms.UserForm{}
+	UserForm := models.User{}
 	if err := c.ShouldBind(&UserForm); err != nil {
 		utils.HandleValidatorError(c, err)
 		return
 	}
+
+	UserForm.UserGuid=utils.GetGuid()
+	UserForm.Password=utils.NewMd5ToString(UserForm.Password)
 	ok:=dao.InsertUser(UserForm)
 	if !ok {
 		Response.Err(c, 401,  "添加失败", ok)

@@ -2,9 +2,9 @@ package models
 
 import "time"
 type User struct {
-	UserGuid string      `json:"userGuid" gorm:"primaryKey"`
+	UserGuid string     `json:"user_guid" gorm:"primaryKey"`
 	Password string    `json:"password"`
-	UserName string    `json:"userName"`
+	UserName string    `json:"user_name"`
 	HeadUrl  string    `json:"head_url"`
 	Birthday *time.Time `json:"birthday" gorm:"type:date"`
 	Address  string    `json:"address"`

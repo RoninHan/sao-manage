@@ -8,11 +8,11 @@ import (
 	"time"
 )
 
-func CreateToken(c *gin.Context, Id int, NickName string, Role int) string {
+func CreateToken(c *gin.Context, Id string, NickName string, Role int) string {
 	//生成token信息
 	j := middlewares.NewJWT()
 	claims := middlewares.CustomClaims{
-		ID:          uint(Id),
+		ID:          Id,
 		NickName:    NickName,
 		AuthorityId: uint(Role),
 		StandardClaims: jwt.StandardClaims{
@@ -25,7 +25,7 @@ func CreateToken(c *gin.Context, Id int, NickName string, Role int) string {
 	//生成token
 	token, err := j.CreateToken(claims)
 	if err != nil {
-		Response.Success(c, 401, "token生成失败,重新再试", "test")
+		Response.Success(c,  "token生成失败,重新再试", "test")
 		return ""
 	}
 	return token

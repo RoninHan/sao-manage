@@ -18,10 +18,10 @@ func GetCaptcha(ctx *gin.Context) {
 	id, b64s, err := cp.Generate()
 	if err != nil {
 		zap.S().Errorf("生成验证码错误,:%s ", err.Error())
-		Response.Err(ctx, http.StatusInternalServerError, 500, "生成验证码错误", "")
+		Response.Err(ctx, http.StatusInternalServerError,  "生成验证码错误", "")
 		return
 	}
-	Response.Success(ctx, 200, "生成验证码成功", gin.H{
+	Response.Success(ctx, "生成验证码成功", gin.H{
 		"captchaId": id,
 		"picPath":   b64s,
 	})

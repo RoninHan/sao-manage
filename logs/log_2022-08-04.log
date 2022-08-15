@@ -1,0 +1,1 @@
+2022-08-04T17:01:51.720+0800	INFO	middlewares/GinLogger.go:33	/v1/user/insert	{"statusxixixixi": 404, "method": "POST", "path": "/v1/user/insert", "query": "password=", "ip": "::1", "user-agent": "apifox/1.0.0 (https://www.apifox.cn)", "errors": "", "cost": "0s"}

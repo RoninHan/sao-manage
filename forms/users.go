@@ -6,22 +6,22 @@ type PasswordLoginForm struct {
 	UserName  string `form:"name" json:"name"`
 	Mobile    string `form:"mobile" json:"mobile"` //手机号码格式有规范可寻， 自定义validator
 	PassWord  string `form:"password" json:"password" binding:"required,min=3,max=20"`
-	Captcha   string `form:"captcha" json:"captcha" binding:"required,min=5,max=5"` // 验证码
-	CaptchaId string `form:"captcha_id" json:"captcha_id" binding:"required"`       // 验证码id
+	Captcha   string `form:"captcha" json:"captcha" ` // 验证码 binding:"required,min=5,max=5"
+	CaptchaId string `form:"captcha_id" json:"captcha_id" `       // 验证码id binding:"required"
 }
 
 
+
 type UserListForm struct {
-	userGuid string
-	password string
-	userName string
-	head_url string
-	birthday string
-	address string
-	desc string
-	gender string
+	UserGuid string
+	Password string
+	UserName string
+	Head_url string
+	Birthday string
+	Address string
+	Gender string
 	mobile string
-	Page int
+	Current int
 	PageSize int
 }
 

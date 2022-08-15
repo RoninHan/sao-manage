@@ -14,6 +14,16 @@ func Success(c *gin.Context, msg interface{}, data interface{}) {
 	return
 }
 
+func SuccessGrid(c *gin.Context, msg interface{}, data interface{},total int) {
+	c.JSON(http.StatusOK, map[string]interface{}{
+		"code": http.StatusOK, // 自定义code
+		"msg":  msg,  // message
+		"data": data, // 数据
+		"total": total,
+	})
+	return
+}
+
 // 返回失败
 func Err(c *gin.Context, httpCode int, msg string, jsonStr interface{}) {
 	c.JSON(httpCode, map[string]interface{}{

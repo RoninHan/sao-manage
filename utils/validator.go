@@ -20,7 +20,7 @@ func HandleValidatorError(c *gin.Context, err error) {
 		})
 	}
 	msg :=removeTopStruct(errs.Translate(global.Trans))
-	Response.Err(c,http.StatusBadRequest,400,"字段校验错误",msg)
+	Response.Err(c,http.StatusBadRequest,"字段校验错误",msg)
 	return
 }
 //   removeTopStruct 定义一个去掉结构体名称前缀的自定义方法：

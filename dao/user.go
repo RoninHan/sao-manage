@@ -35,13 +35,12 @@ func GetUserListDao(page int, page_size int) (int, []interface{}) {
 			birthday = useSingle.Birthday.Format("2006-01-02")
 		}
 		userItemMap := map[string]interface{}{
-			"id":        useSingle.ID,
+			"userGuid":        useSingle.UserGuid,
 			"password":  useSingle.Password,
-			"nick_name": useSingle.NickName,
+			"userName": useSingle.UserName,
 			"head_url":  useSingle.HeadUrl,
 			"birthday":  birthday,
 			"address":   useSingle.Address,
-			"desc":      useSingle.Desc,
 			"gender":    useSingle.Gender,
 			"role":      useSingle.Role,
 			"mobile":    useSingle.Mobile,
@@ -65,7 +64,7 @@ func FindUserInfo(username string, password string) (*models.User, bool) {
 
 
 //添加用户
-func InsertUser(userInfo forms.UserForm) bool{
+func InsertUser(userInfo models.User) bool{
 	row :=global.DB.Create(userInfo)
 	if row.RowsAffected < 1 {
 		return false
